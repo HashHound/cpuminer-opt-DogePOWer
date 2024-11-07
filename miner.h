@@ -4,7 +4,7 @@
 #include <cpuminer-config.h>
 
 #if !( defined(__SSE2__) || ( defined(__aarch64__) && defined(__ARM_NEON) ) )
-#warning "Unknown or unsupported CPU, requires x86_64 with SSE2 or AArch64 with NEON." 
+#warning "Unknown or unsupported CPU, requires x86_64 with SSE2 or AArch64 with NEON."
 #endif
 
 #if defined(__x86_64__)
@@ -12,7 +12,7 @@
 #elif defined(__aarch64__)
    #define USER_AGENT_ARCH "arm"     // AArch64
 //#elif
-//  #define USER_AGENT_ARCH "r5"     // RISC-V             
+//  #define USER_AGENT_ARCH "r5"     // RISC-V
 #else
    #define USER_AGENT_ARCH
 #endif
@@ -24,7 +24,7 @@
 #elif defined(__APPLE__)
    #define USER_AGENT_OS   "M"      // Apple MacOS
 // is there a generic BSD macro?
-#elif defined(__unix__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__) 
+#elif defined(__unix__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__)
    #define USER_AGENT_OS   "U"      // BSD unix
 #else
    #define USER_AGENT_OS
@@ -35,7 +35,7 @@
 /*
 #ifdef _MSC_VER
 
-#undef USE_ASM 
+#undef USE_ASM
 #ifdef NOASM
 #undef USE_ASM
 #endif
@@ -96,7 +96,7 @@ static inline bool is_root()
 #ifndef min
 #define min(a,b) (a>b ? (b) :(a))
 #endif
-#ifndef max 
+#ifndef max
 #define max(a,b) (a<b ? (b) : (a))
 #endif
 */
@@ -151,7 +151,7 @@ enum {
 // for large vectors. Physical block size must be extended by alignment number
 // of bytes when allocated. free() should use the physical pointer returned by
 // malloc(), not the aligned pointer. All others shoujld use the logical,
-// aligned, pointer returned by this function. 
+// aligned, pointer returned by this function.
 static inline void *align_ptr( const void *ptr, const uint64_t alignment )
 {
   const uint64_t mask = alignment - 1;
@@ -168,7 +168,7 @@ static inline bool is_windows(void)
 	return false;
 #endif
 }
- 
+
 #include "compat.h"
 
 #ifndef ARRAY_SIZE
@@ -525,7 +525,7 @@ struct stratum_ctx {
 	pthread_mutex_t work_lock;
 
    int block_height;
-   bool new_job;  
+   bool new_job;
 } __attribute__ ((aligned (64)));
 
 bool stratum_socket_full(struct stratum_ctx *sctx, int timeout);
@@ -601,17 +601,18 @@ enum algos {
         ALGO_ARGON2D250,
         ALGO_ARGON2D500,
         ALGO_ARGON2D4096,
-        ALGO_AXIOM,       
-        ALGO_BLAKE,       
+        ALGO_AXIOM,
+        ALGO_BLAKE,
         ALGO_BLAKE2B,
-        ALGO_BLAKE2S,     
+        ALGO_BLAKE2S,
         ALGO_BLAKECOIN,
-        ALGO_BMW,        
+        ALGO_BMW,
         ALGO_BMW512,
-        ALGO_C11,         
+        ALGO_C11,
         ALGO_DEEP,
         ALGO_DMD_GR,
-        ALGO_GROESTL,     
+        ALGO_DOGEPOWER,
+        ALGO_GROESTL,
         ALGO_HEX,
         ALGO_HMQ1725,
         ALGO_JHA,
@@ -619,24 +620,24 @@ enum algos {
         ALGO_KECCAKC,
         ALGO_LBRY,
         ALGO_LYRA2H,
-        ALGO_LYRA2RE,       
-        ALGO_LYRA2REV2,   
+        ALGO_LYRA2RE,
+        ALGO_LYRA2REV2,
         ALGO_LYRA2REV3,
         ALGO_LYRA2Z,
         ALGO_LYRA2Z330,
         ALGO_M7M,
         ALGO_MINOTAUR,
         ALGO_MINOTAURX,
-        ALGO_MYR_GR,      
+        ALGO_MYR_GR,
         ALGO_NEOSCRYPT,
-        ALGO_NIST5,       
-        ALGO_PENTABLAKE,  
+        ALGO_NIST5,
+        ALGO_PENTABLAKE,
         ALGO_PHI1612,
         ALGO_PHI2,
         ALGO_POLYTIMOS,
         ALGO_POWER2B,
         ALGO_QUARK,
-        ALGO_QUBIT,       
+        ALGO_QUBIT,
         ALGO_SCRYPT,
         ALGO_SHA256D,
         ALGO_SHA256DT,
@@ -644,8 +645,8 @@ enum algos {
         ALGO_SHA256T,
         ALGO_SHA3D,
         ALGO_SHA512256D,
-        ALGO_SKEIN,       
-        ALGO_SKEIN2,      
+        ALGO_SKEIN,
+        ALGO_SKEIN2,
         ALGO_SKUNK,
         ALGO_SONOA,
         ALGO_TIMETRAVEL,
@@ -657,14 +658,14 @@ enum algos {
         ALGO_WHIRLPOOL,
         ALGO_WHIRLPOOLX,
         ALGO_X11,
-        ALGO_X11EVO,         
+        ALGO_X11EVO,
         ALGO_X11GOST,
         ALGO_X12,
-        ALGO_X13,         
+        ALGO_X13,
         ALGO_X13BCD,
         ALGO_X13SM3,
-        ALGO_X14,        
-        ALGO_X15,       
+        ALGO_X14,
+        ALGO_X15,
         ALGO_X16R,
         ALGO_X16RV2,
         ALGO_X16RT,
@@ -706,6 +707,7 @@ static const char* const algo_names[] = {
         "c11",
         "deep",
         "dmd-gr",
+        "dogepower",
         "groestl",
         "hex",
         "hmq1725",
@@ -867,6 +869,7 @@ Options:\n\
                           c11           Chaincoin\n\
                           deep          Deepcoin (DCN)\n\
                           dmd-gr        Diamond\n\
+                          dogepower     Dogemone\n\
                           groestl       Groestl coin\n\
                           hex           x16r-hex\n\
                           hmq1725       Espers\n\
@@ -1071,4 +1074,3 @@ static struct option const options[] = {
 
 
 #endif /* __MINER_H__ */
-

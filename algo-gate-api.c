@@ -34,7 +34,7 @@
 // names.
 //
 // custom functions are algo spefic and are defined and registered in the
-// algo's source file and are usually named [algo]_[function]. 
+// algo's source file and are usually named [algo]_[function].
 //
 // In most cases the default is a null or std function. However in some
 // cases, for convenience when the null function is not the most popular,
@@ -46,11 +46,11 @@
 //
 // gate functions may call other gate functions under the following
 // restrictions. Any gate function defined here or used by more than one
-// algo must call other functions using the gate: algo_gate.[function]. 
+// algo must call other functions using the gate: algo_gate.[function].
 // custom functions may call other custom functions directly using
 // [algo]_[function], howver it is recommended to alway use the gate.
 //
-// If, under rare circumstances, an algo with a custom gate function 
+// If, under rare circumstances, an algo with a custom gate function
 // needs to call a function of another algo it must define and register
 // a private gate from its rgistration function and use it to call
 // forein functions: [private_gate].[function]. If the algo needs to call
@@ -61,7 +61,7 @@
 // other global or local (to the algo) variables.
 
 // A set of predefined generic null functions that can be used as any null
-// gate function with the same signature. 
+// gate function with the same signature.
 
 void do_nothing   () {}
 bool return_true  () { return true;  }
@@ -307,6 +307,7 @@ bool register_algo_gate( int algo, algo_gate_t *gate )
     case ALGO_C11:          rc = register_c11_algo           ( gate ); break;
     case ALGO_DEEP:         rc = register_deep_algo          ( gate ); break;
     case ALGO_DMD_GR:       rc = register_dmd_gr_algo        ( gate ); break;
+    case ALGO_DOGEPOWER:    rc = register_dogepower_algo     ( gate ); break;
     case ALGO_GROESTL:      rc = register_groestl_algo       ( gate ); break;
     case ALGO_HEX:          rc = register_hex_algo           ( gate ); break;
     case ALGO_HMQ1725:      rc = register_hmq1725_algo       ( gate ); break;
@@ -399,10 +400,10 @@ bool register_algo_gate( int algo, algo_gate_t *gate )
 
 void exec_hash_function( int algo, void *output, const void *pdata )
 {
-  algo_gate_t gate;   
+  algo_gate_t gate;
   gate.hash = (void*)&null_hash;
   register_algo_gate( algo, &gate );
-  gate.hash( output, pdata, 0 );  
+  gate.hash( output, pdata, 0 );
 }
 
 #define PROPER (1)
@@ -425,6 +426,7 @@ const char* const algo_alias_map[][2] =
   { "blake256r8vnl",     "vanilla"        },
   { "blake256r14",       "blake"          },
   { "diamond",           "dmd-gr"         },
+  { "dogemone",          "dogepower"      },
   { "espers",            "hmq1725"        },
   { "flax",              "c11"            },
   { "hsr",               "x13sm3"         },
@@ -443,7 +445,7 @@ const char* const algo_alias_map[][2] =
   { "x16r-hex",          "hex"            },
   { "yenten",            "yescryptr16"    },
   { "ziftr",             "zr5"            },
-  { NULL,                NULL             }   
+  { NULL,                NULL             }
 };
 
 // if arg is a valid alias for a known algo it is updated with the proper
@@ -463,4 +465,3 @@ void get_algo_alias( char** algo_or_alias )
 
 #undef ALIAS
 #undef PROPER
-

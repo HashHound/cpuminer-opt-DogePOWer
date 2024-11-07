@@ -1247,3 +1247,20 @@ int yespower_free_local(yespower_local_t *local)
     return free_region(local);
 }
 #endif
+
+int dogepower_hash(const char *input, char *output, int thr_id) {
+    yespower_params_t dogepower_params = {
+        .N = 2048,
+        .r = 32,
+        .pers = NULL,
+        .perslen = 0
+    };
+
+    unsigned char hash[32];
+    if (yespower_tls((unsigned char *)input, 80, &dogepower_params, (yespower_binary_t *)hash)) {
+        return -1;
+    }
+    // Perform Blake256 on the output of Yespower
+    blake256_hash((uint8_t *)output, hash, 32);
+    return 0;
+}
